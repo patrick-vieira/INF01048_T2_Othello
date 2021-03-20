@@ -2,7 +2,7 @@ import heapq
 import sys
 
 from common import board
-from player1.move_score import MoveScore
+from player_patrick.move_score import MoveScore
 
 
 class Patrick:

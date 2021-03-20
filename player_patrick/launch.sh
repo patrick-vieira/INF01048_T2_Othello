@@ -1,2 +1,2 @@
 #!/bin/bash
-python patrick.py $1 $2
+python min_max.py $1 $2

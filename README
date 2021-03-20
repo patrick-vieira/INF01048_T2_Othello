@@ -1,0 +1,78 @@
+=== Servidor de Othello ===
+
+Este arquivo contem instruções simples para execução do servidor e do jogador 'random'.
+
+
+== Requisitos ==
+O servidor foi testado em uma máquina GNU/Linux (Ubuntu, mais precisamente) com
+o interpretador python 3.7.
+
+Outras versões do interpretador python ou sistema operacional podem funcionar, mas não foram testados.
+
+== Instruções ==
+
+Para iniciar uma partida de Othello, digite no terminal:
+
+python server.py [-h] [-d delay] [-r stdout-file] [-l log-history] player1 player2
+
+Onde 'player(1 ou 2)' são os diretórios onde estão os launch.sh dos jogadores.
+Os argumentos entre colchetes são opcionais, seu significado é descrito a seguir:
+
+-h, --help            Mensagem de ajuda
+-d delay, --delay delay
+                    Tempo alocado para os jogadores realizarem a jogada (default=5s)
+-r stdout-file, --redir-stdout stdout-file
+                    Arquivo para redirecionar a saída gerada por prints dos jogadores
+-l log-history, --log-history log-history
+                    Arquivo para o log do jogo (default=history.txt)
+
+
+O jogador 'random' se localiza no diretório randomplayer. Para jogar uma partida com ele,
+basta substituir diretorio_player1 ou 2 por randomplayer. Como exemplo, inicie
+uma partida random vs. random para ver o servidor funcionando:
+
+python server.py randomplayer randomplayer -d 1
+
+O delay pode ser de 1 segundo porque o jogador random é muito rápido (e muito incompetente).
+
+== Funcionamento ==
+
+Iniciando pelo player1, que jogará com as peças pretas, o servidor cria um arquivo
+com o estado do tabuleiro e chama o launch.sh do jogador com o comando:
+
+./launch.sh caminho_do_arquivo cor
+
+Onde cor é black ou white (pretas ou brancas). O servidor então espera
+o delay e checa o arquivo move.txt que o jogador cria no mesmo diretório do seu
+launch.sh. O servidor processa a jogada, exibe o novo estado no terminal
+e passa a vez pro oponente, repetindo esse ciclo até o fim do jogo.
+
+Note que o servidor executa o launch.sh de cada jogador várias vezes, uma para cada jogada.
+
+No fim do jogo, o servidor exibe a pontuação de cada jogador e cria um arquivo history.txt
+com todas as jogadas tentadas pelos jogadores (inclusive as ilegais).
+
+No arquivo com o estado do tabuleiro, W é uma peça branca, B uma preta e . um espaço vazio.
+O exemplo abaixo mostra o conteúdo desse arquivo para o estado inicial do jogo:
+........
+........
+........
+...WB...
+...BW...
+........
+........
+........
+
+O arquivo move.txt deve conter as coordenadas x,y onde a peça será colocada. Ambos x e y vão de
+0 a 7. x cresce da esquerda para a direita e y cresce de cima para baixo.
+
+Considerando o estado inicial, um dos movimentos válidos para as pretas é x = 5 e y = 4.
+O arquivo move.txt de um agente que decidiu por este movimento terá 5,4 na primeira linha e nada mais.
+
+== Notas ==
+- Veja os arquivos state.txt e move.txt que são gerados pelo randomplayer para conferir
+ o formato dos mesmos.
+- O servidor checa a legalidade das jogadas antes de efetivá-las.
+- Jogadas ilegais resultam em desqualificação.
+- O jogador 'random' apenas sorteia uma jogada entre as válidas no estado recebido.
+- Em caso de problemas com o servidor, reporte via moodle ou email.

@@ -25,10 +25,10 @@ class AlphaBeta:
         self.danger_zone = self.get_danger_zone()
         self.borders_zone = self.get_borders_zone()
 
-
     def get_danger_zone(self):
-        zone = [(1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (2, 1), (2, 6), (3, 1), (3, 6), (4, 1), (4, 6), (5, 1), (5, 6), (6, 1), (6, 2), (6, 3), (6, 4), (6, 5), (6, 6)]
-        if len(zone) < 0: #hardcoded para não calcular denovo
+        zone = [(1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (2, 1), (2, 6), (3, 1), (3, 6), (4, 1), (4, 6), (5, 1),
+                (5, 6), (6, 1), (6, 2), (6, 3), (6, 4), (6, 5), (6, 6)]
+        if len(zone) < 0:  # hardcoded para não calcular denovo
             for col in range(1, 7):  # coluna
                 for row in range(1, 7):  # lina
                     if col == 1 or col == 6:
@@ -38,7 +38,9 @@ class AlphaBeta:
         return zone
 
     def get_borders_zone(self):
-        zone = [(0, 0), (0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (0, 6), (0, 7), (1, 0), (1, 7), (2, 0), (2, 7), (3, 0), (3, 7), (4, 0), (4, 7), (5, 0), (5, 7), (6, 0), (6, 7), (7, 0), (7, 1), (7, 2), (7, 3), (7, 4), (7, 5), (7, 6), (7, 7)]
+        zone = [(0, 0), (0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (0, 6), (0, 7), (1, 0), (1, 7), (2, 0), (2, 7), (3, 0),
+                (3, 7), (4, 0), (4, 7), (5, 0), (5, 7), (6, 0), (6, 7), (7, 0), (7, 1), (7, 2), (7, 3), (7, 4), (7, 5),
+                (7, 6), (7, 7)]
         if len(zone) < 0:  # hardcoded para não calcular denovo
             for col in range(0, 8):  # coluna
                 for row in range(0, 8):  # lina
@@ -145,7 +147,7 @@ class AlphaBeta:
     def move_eval(self, a_board, move, color):
         score = 0
         score += self.is_move_on_corner(move)
-        #score += self.off_center_move(move) # não deu muito certo
+        # score += self.off_center_move(move) # não deu muito certo
         score += self.is_move_in_danger_zone(move)
         score += self.is_move_in_borders(move)
         score += self.check_opponent_next_move(a_board, move, color)
@@ -158,18 +160,18 @@ class AlphaBeta:
 
         opponent_next_moves = a_board.legal_moves(a_board.opponent(color))
 
-        if len(opponent_next_moves) < 3:  #se oponente não tem poucos  movimentos é bom
+        if len(opponent_next_moves) < 3:  # se oponente não tem poucos  movimentos é bom
             score += 5
 
-        if len(opponent_next_moves) < 1: #se oponente não tem mais movimentos é bom
+        if len(opponent_next_moves) < 1:  # se oponente não tem mais movimentos é bom
             score += 10
 
         for opponent_move in opponent_next_moves:
-            if self.is_move_on_corner(opponent_move):  #se oponente pode usar canto é ruim
+            if self.is_move_on_corner(opponent_move):  # se oponente pode usar canto é ruim
                 score -= 2
                 return score
 
-            if self.is_move_in_borders(opponent_move):  #se oponente pode usar borda é ruim
+            if self.is_move_in_borders(opponent_move):  # se oponente pode usar borda é ruim
                 score -= 1
                 return score
         return score
@@ -207,9 +209,8 @@ if __name__ == '__main__':
     patrick = AlphaBeta(b, sys.argv[2])
 
     with MonitorPerformance(True):
-        movement = patrick.next_move_alfa_beta(2)
+        movement = patrick.next_move_alfa_beta(4)
 
     f.write('%d,%d' % movement)
 
     f.close()
-

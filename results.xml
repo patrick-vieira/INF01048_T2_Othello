@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <othello-match>
-	<timing start="Mon Mar 22 00:06:35 2021" finish="Mon Mar 22 00:06:56 2021"/>
+	<timing start="Mon Mar 22 01:29:15 2021" finish="Mon Mar 22 01:30:57 2021"/>
 	<player1 directory="player_alpha_beta_v3" color="B" result="loss" score="12"/>
 	<player2 directory="player_alpha_beta_v2" color="W" result="win" score="52"/>
 	<moves>

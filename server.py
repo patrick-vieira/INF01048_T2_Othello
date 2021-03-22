@@ -119,10 +119,10 @@ class Server(object):
                 stdout=stdout,
                 preexec_fn=os.setsid
             )
-            a = player_process.wait(self.delay)
 
             #  waits 'delay' seconds for the move to complete
             print('Waiting for next move of Player %d...' % (player + 1))
+            a = player_process.wait(self.delay)
             #time.sleep(self.delay)
 
             # kills player process, collects and processes move
